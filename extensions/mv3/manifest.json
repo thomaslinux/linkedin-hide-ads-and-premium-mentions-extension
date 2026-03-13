@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "LinkedIn Userstyle MV3",
+  "name": "LinkedIn Hider MV3",
   "version": "1.0.0",
   "description": "Apply a remote userstyle to linkedin.com with checkboxes.",
   "permissions": ["storage", "alarms"],
@@ -18,7 +18,7 @@
   "content_scripts": [
     {
       "matches": ["*://www.linkedin.com/*"],
-      "js": ["content-script.js"],
+      "js": ["content.js"],
       "run_at": "document_end"
     }
   ]
