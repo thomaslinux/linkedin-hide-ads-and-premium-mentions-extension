@@ -1,0 +1,93 @@
+/* ==UserStyle==
+@name         tl9 hide ads and try premium linkedin
+@version      20260313.11.44
+@namespace    linkedin
+@description  hide ads, games and try premium mentions from linkedin
+@license      No License
+@preprocessor stylus
+@var checkbox hidePremiumUpsell "Hide premium upsell" 1
+@var checkbox hidePremiumUpsellOnProfile "hide Premium Upsell On Profile" 1
+@var checkbox hideAds "Hide ads" 1
+@var checkbox hideGame "Hide Game" 1
+@var checkbox hideAISuggestion "hideAISuggestion" 1
+@var checkbox hideTryPremiumInNotifications "Hide Try Premium In Notifications" 1
+@var checkbox hidePremiumBadgeOnComments "hide Premium Badge On Comments" 1
+@var checkbox hideSponsoredPosts "hide Sponsored Posts" 0
+@var checkbox hideAdsIframeDetect "hideAdsIframeDetect" 0
+@var checkbox hideAnalyticsCards "hideAnalyticsCards" 1
+@var checkbox nowrapProfileDescription "nowrapProfileDescription" 1
+==/UserStyle== */
+@-moz-document domain("linkedin.com") {
+    if hidePremiumUpsell {
+        .premium-upsell-link,
+        .update-components-promo,
+        .windows-upsell-banner,
+        .ai-suggestions-bar,
+        [data-view-name="premium-nav-upsell-text"],
+        a[href*="premium/products/"],
+        div:has(> a[href*="premium/products/"]) {
+            display: none !important;
+        }
+    }
+    if hidePremiumUpsellOnProfile {
+        button:has(> svg[data-test-icon="premium-chip-small"]),
+        section[data-view-name="profile-card"]:has(svg[data-test-icon="premium-chip-small"]),
+        section:has(svg[data-test-icon="passkey"]) {
+            display: none;
+        }
+    }
+    if hidePremiumBadgeOnComments {
+        svg[data-test-icon="linkedin-bug-premium-v2-xxsmall"] {
+            display: none;
+        }
+    }
+    if hideTryPremiumInNotifications {
+        article:has(a[href*="search-appearances"]) {
+            display: none !important;
+        }
+    }
+    if hideAds {
+        [title="publicité"],
+        .ad-banner-container {
+            display: none !important;
+        }
+    }
+    if hideGame {
+        #todays-games-entrypoint-title,
+        div:has(> a[href*="games"]),
+        article:has(a[href*="games"]),
+        a[href*="games"] {
+            display: none !important;
+        }
+    }
+    if hideAISuggestion {
+        section:has(svg[data-test-icon="sparkle"]),
+        div:has(> svg[id*="premium"]),
+        button:has(svg[id*="premium"]) {
+            display: none;
+        }
+    }
+    if hideSponsoredPosts {
+        div.fie-impression-container:has(span.update-components-actor__sub-description.text-body-xsmall.t-black--light.update-components-actor__sub-description--untruncated),
+        div.fie-impression-container:has(div.update-components-linkedin-video__sponsored-description-container) {
+            display: none !important;
+        }
+    }
+    if hideAdsIframeDetect {
+        section:has(> iframe[data-ad-banner=""]) {
+            display: none;
+        }
+    }
+    if hideAnalyticsCards {
+        article:has(a[href*="analytics/profile-views"]) {
+            display: none;
+        }
+    }
+    if nowrapProfileDescription {
+
+        .update-components-actor__description,
+        .comments-comment-meta__description-subtitle {
+            white-space: normal;
+        }
+    }
+}
