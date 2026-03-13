@@ -7,52 +7,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-// Group by simple # SectionName parsing
-const sections = {};
-Object.entries(userstyleVars).forEach(([id]) => {
-  // Extract section from nearest preceding # comment
-  const cssLines = (await chrome.storage.local.get("userstyleCSS")).userstyleCSS.split('\n');
-  let currentSection = "Other";
-  
-  for (let i = 0; i < cssLines.length; i++) {
-    if (cssLines[i].trim().startsWith('#')) {
-      currentSection = cssLines[i].trim().slice(1).trim();
-    }
-    if (cssLines[i].includes(`@var checkbox ${id}`)) {
-      sections[id] = currentSection;
-      break;
-    }
-  }
-});
-
-// Group vars and render
-const grouped = {};
-Object.entries(userstyleVars).forEach(([id, info]) => {
-  const section = sections[id] || "Other";
-  grouped[section] = grouped[section] || [];
-  grouped[section].push({id, ...info});
-});
-
-Object.entries(grouped).forEach(([sectionName, vars]) => {
-  // Section header
-  const sectionDiv = document.createElement("div");
-  sectionDiv.style.marginBottom = "12px";
-  sectionDiv.innerHTML = `<h3 style="margin: 0 0 8px 0; font-size: 14px;">${sectionName}</h3>`;
-  container.appendChild(sectionDiv);
-
-  // Your existing checkbox code here (unchanged)
-  vars.forEach(({ id, label, enabled }) => {
+  Object.entries(userstyleVars).forEach(([id, info]) => {
     const wrapper = document.createElement("div");
     wrapper.className = "var-item";
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.id = id;
-    checkbox.checked = enabled;
+    checkbox.checked = info.enabled;
 
-    const labelEl = document.createElement("label");
-    labelEl.htmlFor = id;
-    labelEl.textContent = label || id;
+    const label = document.createElement("label");
+    label.htmlFor = id;
+    label.textContent = info.label || id;
 
     checkbox.addEventListener("change", async () => {
       const stored = await chrome.storage.local.get("userstyleVars");
@@ -61,6 +27,7 @@ Object.entries(grouped).forEach(([sectionName, vars]) => {
       vars[id].enabled = checkbox.checked;
       await chrome.storage.local.set({ userstyleVars: vars });
 
+      // Tell content script to rebuild CSS
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const tab = tabs[0];
         if (!tab || !tab.id) return;
@@ -69,7 +36,7 @@ Object.entries(grouped).forEach(([sectionName, vars]) => {
     });
 
     wrapper.appendChild(checkbox);
-    wrapper.appendChild(labelEl);
-    sectionDiv.appendChild(wrapper);
+    wrapper.appendChild(label);
+    container.appendChild(wrapper);
   });
 });
