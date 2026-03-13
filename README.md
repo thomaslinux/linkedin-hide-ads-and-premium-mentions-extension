@@ -23,7 +23,7 @@ The site will prompt you to install the stylus extension on your browser first.
 ## V0 - Home
 
 - [x] Hide home page premium mentions
-- [ ] Hide home page game mentions
+- [x] Hide home page game mentions
 
 ## V1
 
@@ -37,10 +37,16 @@ The web version of LinkedIn on mobile is cleaner, but it could use some work at 
 
 ## V3 - Extension port
 
-|GITHUB route|Userstyle route|
-|---|---|
-|- [ ] publish the style on github|- [ ] yoink the OpenStylus/stylus code that fetches the style from userstyles.world|
-|- [ ] pull the style from github on update|- [ ] pull the style from userstyles on update|
-
 - [ ] Build the interface from the userCSS
+- [ ] user can add new filters
+  - [ ] textarea to paste the css
+  - [ ] save the css in the extension storage
+  - [ ] export the user filters
 
+**GITHUB route**
+- [ ] publish the style on github
+- [ ] pull the style from github on update
+
+**Userstyle route**
+- [ ] yoink the OpenStylus/stylus working code that fetches the style from userstyles.world
+- [ ] pull the style from userstyles on update
