@@ -27,3 +27,6 @@ This working userscript makes it possible to inject css in a <style> of the docu
 //   `;
 //   document.head.appendChild(style);
 // });
+
+-- message 2 --
+use the # present in the json data: code: to group the buttons into sections
